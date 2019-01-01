@@ -36,12 +36,12 @@
 </head>
 <body>
 <table>
-    <c:forEach items="${board}" var="row" varStatus="xLoop">
+    <c:forEach items="${board}" var="rows" varStatus="yLoop">
         <tr>
-            <c:forEach items="${row}" var="cell" varStatus="yLoop">
+            <c:forEach items="${rows}" var="cell" varStatus="xLoop">
                 <c:if test="${clickedFieldsBoard[xLoop.index][yLoop.index]}">
                     <td>
-                        ${cell}
+                        ${board[xLoop.index][yLoop.index]}
                     </td>
                 </c:if>
                 <c:if test="${!clickedFieldsBoard[xLoop.index][yLoop.index]}">
