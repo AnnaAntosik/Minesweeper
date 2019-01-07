@@ -39,12 +39,13 @@
     <c:forEach items="${board}" var="rows" varStatus="yLoop">
         <tr>
             <c:forEach items="${rows}" var="cell" varStatus="xLoop">
-                <c:if test="${clickedFieldsBoard[xLoop.index][yLoop.index]}">
+                <c:if test="${board[xLoop.index][yLoop.index].isRevealed()}">
                     <td>
-                        ${board[xLoop.index][yLoop.index]}
+                        ${board[xLoop.index][yLoop.index].getNeighbourBombs()}
                     </td>
                 </c:if>
-                <c:if test="${!clickedFieldsBoard[xLoop.index][yLoop.index]}">
+                <c:if test="${!board[xLoop.index][yLoop.index].isRevealed()}">
+                    Z
                     <td>
                         <form:form method="post" action="/coveredBoard">
                             <input name="x" value="${xLoop.index}" hidden="hidden" />
