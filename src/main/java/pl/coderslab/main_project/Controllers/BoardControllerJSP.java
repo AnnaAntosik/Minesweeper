@@ -12,7 +12,8 @@ import pl.coderslab.main_project.dto.GameplayStatus;
 @Controller
 public class BoardControllerJSP {
 
-  @Autowired BoardService boardService;
+  @Autowired
+  BoardService boardService;
 
   @GetMapping("/coveredBoard")
   public String getCoveredBoard(Model model) {

@@ -24,6 +24,6 @@ public class BoardController2 {
   public BoardDto getClickedValue(int x, int y) {
     boardService.setReviledField(x, y);
     return boardService.getReviledBoard();
-
   }
+
 }

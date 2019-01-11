@@ -24,10 +24,11 @@ public class BoardServiceImpl implements BoardService {
       for (int j = 0; j < gameState.getBoardRows(); j++) {
         if (clickedFieldsTable[i][j]) {
           CellDto cell = new CellDto();
-          if(board[i][j].equals("B")){
+          if (board[i][j].equals("B")) {
             cell.isBomb = true;
-          }else{
-            cell.neighbourBombs = (int)board[i][j];
+            boom = true;
+          } else {
+            cell.neighbourBombs = (int) board[i][j];
           }
           cell.isRevealed = true;
           boardDto.cells[i][j] = cell;
@@ -37,11 +38,12 @@ public class BoardServiceImpl implements BoardService {
       }
     }
     int remainedFieldsWithoutBombs = gameState.getRemainedFields();
-    if(boom){
+    if (boom) {
       boardDto.status = GameplayStatus.LOST;
-    } else if(remainedFieldsWithoutBombs == 0){
+      boardDto = getBombsBoard(boardDto);
+    } else if (remainedFieldsWithoutBombs == 0) {
       boardDto.status = GameplayStatus.WIN;
-    }else{
+    } else {
       boardDto.status = GameplayStatus.CONTINUE;
     }
     return boardDto;
@@ -53,25 +55,26 @@ public class BoardServiceImpl implements BoardService {
     boolean[][] revealedFields = gameState.getRevealedFields();
     int remainedFieldsWithoutBombs = gameState.getRemainedFields();
 
-    remainedFieldsWithoutBombs = revealFields(x, y, revealedFields, board, remainedFieldsWithoutBombs);
+    remainedFieldsWithoutBombs =
+        revealFields(x, y, revealedFields, board, remainedFieldsWithoutBombs);
 
     gameState.setRevealedFields(revealedFields);
     gameState.setRemainedFields(remainedFieldsWithoutBombs);
-    if(board[x][y].equals("B")){
+    if (board[x][y].equals("B")) {
       return GameplayStatus.LOST;
     }
-    if(remainedFieldsWithoutBombs == 0){
+    if (remainedFieldsWithoutBombs == 0) {
       return GameplayStatus.WIN;
     }
     return GameplayStatus.CONTINUE;
   }
 
   private int revealFields(
-          int x,
-          int y,
-          boolean[][] clickedFieldsTable,
-          Object[][] board,
-          int remainedFieldsWithoutBombs) {
+      int x,
+      int y,
+      boolean[][] clickedFieldsTable,
+      Object[][] board,
+      int remainedFieldsWithoutBombs) {
     remainedFieldsWithoutBombs--;
     if (!board[x][y].equals(0)) {
       clickedFieldsTable[x][y] = true;
@@ -80,17 +83,30 @@ public class BoardServiceImpl implements BoardService {
       for (int i = -1; i <= 1; i++) {
         for (int j = -1; j <= 1; j++) {
           if (x + i >= 0
-                  && x + i < gameState.getBoardCols()
-                  && y + j >= 0
-                  && y + j < gameState.getBoardRows()
-                  && (i != 0 || j != 0)
-                  && !clickedFieldsTable[x + i][y + j]) {
+              && x + i < gameState.getBoardCols()
+              && y + j >= 0
+              && y + j < gameState.getBoardRows()
+              && (i != 0 || j != 0)
+              && !clickedFieldsTable[x + i][y + j]) {
             remainedFieldsWithoutBombs =
-                    revealFields(x + i, y + j, clickedFieldsTable, board, remainedFieldsWithoutBombs);
+                revealFields(x + i, y + j, clickedFieldsTable, board, remainedFieldsWithoutBombs);
           }
         }
       }
     }
     return remainedFieldsWithoutBombs;
+  }
+
+  private BoardDto getBombsBoard(BoardDto looserBoard) {
+    Object[][] board = gameState.getBoard();
+    for (int i = 0; i < gameState.getBoardCols(); i++) {
+      for (int j = 0; j < gameState.getBoardRows(); j++) {
+        if (board[i][j].equals("B")) {
+          looserBoard.cells[i][j].isBomb = true;
+          looserBoard.cells[i][j].isRevealed = true;
+        }
+      }
+    }
+    return looserBoard;
   }
 }
