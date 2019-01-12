@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
+import pl.coderslab.main_project.models.Board;
 
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -12,19 +13,15 @@ public class GameStateImpl implements GameState {
     System.out.println("Start");
   }
 
-  private int cols = 4;
-  private int rows = 4;
-  private int bombs = 3;
-  private int remainedFields = cols * rows - bombs;
+  private Board board;
+  private int remainedFields;
+  private boolean[][] revealedFields;
 
-  private Object[][] board = {
-    {1, "B", "B", 1},
-    {1, 3, 3, 2},
-    {0, 1, "B", 1},
-    {0, 1, 1, 1}
-  };
-
-  private boolean[][] revealedFields = new boolean[cols][rows];
+  public void setBoard(Board board) {
+    this.board = board;
+    this.remainedFields = board.sizeX * board.sizeY - board.bombsCount;
+    this.revealedFields = new boolean[board.sizeX][board.sizeY];
+  }
 
   @Override
   public int getRemainedFields() {
@@ -37,22 +34,12 @@ public class GameStateImpl implements GameState {
   }
 
   @Override
-  public int getBoardCols() {
-    return cols;
-  }
-
-  @Override
-  public int getBoardRows() {
-    return rows;
-  }
-
-  @Override
   public boolean[][] getRevealedFields() {
     return revealedFields;
   }
 
   @Override
-  public Object[][] getBoard() {
+  public Board getBoard() {
     return board;
   }
 

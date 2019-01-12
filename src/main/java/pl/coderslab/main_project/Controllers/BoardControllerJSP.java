@@ -17,7 +17,7 @@ public class BoardControllerJSP {
 
   @GetMapping("/coveredBoard")
   public String getCoveredBoard(Model model) {
-    CellDto[][] board = boardService.getReviledBoard().cells;
+    CellDto[][] board = boardService.getRevealedBoard().cells;
     model.addAttribute("board", board);
     return "buttonsBoard";
   }

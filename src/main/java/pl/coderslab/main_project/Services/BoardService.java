@@ -5,6 +5,7 @@ import pl.coderslab.main_project.dto.BoardDto;
 import pl.coderslab.main_project.dto.GameplayStatus;
 
 public interface BoardService {
-    BoardDto getReviledBoard();
+    void createBoard();
+    BoardDto getRevealedBoard();
     GameplayStatus setReviledField(int x, int y);
 }

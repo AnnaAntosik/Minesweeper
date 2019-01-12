@@ -32,7 +32,7 @@ function getBoard() {
                         button.prop("disabled", true);
                     }
                 } else {
-                    td.text(cell["neighbourBombs"]);
+                    td.text(cell["neighbouringBombs"])
                 }
             });
         });

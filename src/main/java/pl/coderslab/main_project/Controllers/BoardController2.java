@@ -15,15 +15,22 @@ public class BoardController2 {
   @Autowired
   BoardService boardService;
 
+  @GetMapping("/newgame")
+  public BoardDto startNewGame() {
+    boardService.createBoard();
+    return boardService.getRevealedBoard();
+  }
+
   @GetMapping("/board")
   public BoardDto getBoard() {
-    return boardService.getReviledBoard();
+    boardService.createBoard();
+    return boardService.getRevealedBoard();
   }
 
   @PostMapping("/board")
   public BoardDto getClickedValue(int x, int y) {
     boardService.setReviledField(x, y);
-    return boardService.getReviledBoard();
+    return boardService.getRevealedBoard();
   }
 
 }
