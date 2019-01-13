@@ -1,12 +1,10 @@
 package pl.coderslab.main_project.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.main_project.Services.BoardService;
 import pl.coderslab.main_project.dto.BoardDto;
+import pl.coderslab.main_project.dto.Difficulty;
 
 @RestController
 @RequestMapping("/")
@@ -15,15 +13,15 @@ public class BoardController2 {
   @Autowired
   BoardService boardService;
 
-  @GetMapping("/newgame")
-  public BoardDto startNewGame() {
-    boardService.createBoard();
+  @PostMapping("/newgame")
+  public BoardDto startNewGame(@RequestBody String difficulty) {
+    Difficulty gameDifficulty = Difficulty.valueOf(difficulty);
+    boardService.createBoard(gameDifficulty);
     return boardService.getRevealedBoard();
   }
 
   @GetMapping("/board")
   public BoardDto getBoard() {
-    boardService.createBoard();
     return boardService.getRevealedBoard();
   }
 

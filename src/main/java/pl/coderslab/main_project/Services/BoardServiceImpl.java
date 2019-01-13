@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.coderslab.main_project.Components.GameState;
 import pl.coderslab.main_project.dto.BoardDto;
 import pl.coderslab.main_project.dto.CellDto;
+import pl.coderslab.main_project.dto.Difficulty;
 import pl.coderslab.main_project.dto.GameplayStatus;
 import pl.coderslab.main_project.models.Board;
 import pl.coderslab.main_project.models.Cell;
@@ -19,11 +20,28 @@ public class BoardServiceImpl implements BoardService {
     CellService cellService;
 
     @Override
-    public void createBoard() { // TODO difficulty
+    public void createBoard(Difficulty difficulty) { // TODO difficulty
         if (gameState.getBoard() != null) return;
-        int xSize = 9;
-        int ySize = 9;
-        int bombs = 10;
+        int xSize = 0;
+        int ySize = 0;
+        int bombs = 0;
+        switch (difficulty) {
+            case EASY:
+                xSize = 9;
+                ySize = 9;
+                bombs = 10;
+                break;
+            case MEDIUM:
+                xSize = 16;
+                ySize = 16;
+                bombs = 40;
+                break;
+            case HARD:
+                xSize = 30;
+                ySize = 16;
+                bombs = 99;
+                break;
+        }
         Cell[][] cells = cellService.generateBoard(xSize, ySize, bombs);
         Board board = new Board(cells, xSize, ySize, bombs);
         gameState.setBoard(board);

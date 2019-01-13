@@ -1,6 +1,6 @@
 $(function () {
 
-    getBoard()
+    setDifficultyLevel()
 
 });
 
@@ -69,5 +69,31 @@ function uncover(x, y) {
     }).fail(function (xhr, status, err) {
     }).always(function (xhr, status) {
     });
+
+}
+
+function setDifficultyLevel() {
+    var submitBtn = $('#submitButton');
+
+    submitBtn.on('click', function () {
+        var selectedDifficulty = $("select[name='level']").val();
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            url: "http://localhost:8080/newgame",
+            data: selectedDifficulty,
+            type: "POST",
+            dataType: "json"
+
+        }).done(function (result) {
+
+            getBoard()
+
+        }).fail(function (xhr, status, err) {
+        }).always(function (xhr, status) {
+        });
+    })
 
 }
