@@ -24,6 +24,7 @@ function getBoard() {
             $.each(row, function (j, cell) {
                 var td = $('<td>');
                 tr.append(td);
+                td.addClass("cell");
                 var button = $('<button class="boardButton" type="button"></button>');
                 if (cell["isRevealed"] === false) {
                     button.appendTo(td);
@@ -32,23 +33,42 @@ function getBoard() {
                         button.prop("disabled", true);
                     }
                 } else {
-                    td.text(cell["neighbouringBombs"])
+                    if (cell["isBomb"]) {
+                        var span = $('<span>');
+                        span.addClass("fas fa-bomb");
+                        td.append(span);
+                    } else {
+                        var span = $('<span>');
+                        span.addClass("neighbouring");
+                        td.append(span);
+                        span.text(cell["neighbouringBombs"])
+                    }
                 }
             });
         });
 
         if (result["status"] === "LOST") {
-            var lostDiv = $('<div class="lost">YOU LOST!</div>');
+            var lostDiv = $('<div class="alert alert-danger">YOU LOST!</div>');
             boardDiv.after(lostDiv);
         } else if (result["status"] === "WIN") {
-            var winDiv = $('<div class="win">YOU WIN!</div>');
+            var winDiv = $('<div class="alert alert-success">YOU WIN!</div>');
             boardDiv.after(winDiv);
         }
 
         var buttons = $('button');
-        buttons.on('click', function () {
+        /*buttons.on('click', function () {
             uncover($(this).attr('x'), $(this).attr('y'));
-        })
+        });*/
+
+        buttons.mouseup(function (e) {
+           if (e.which = 1) {
+               uncover($(this).attr('x'), $(this).attr('y'));
+           } else if (e.which = 3) {
+               flagButton($(this).attr('x'), $(this).attr('y'))
+           }
+        });
+
+
 
     }).fail(function (xhr, status, err) {
     }).always(function (xhr, status) {
@@ -72,6 +92,21 @@ function uncover(x, y) {
 
 }
 
+function flagButton(x, y) {
+    $.ajax({
+        url: "http://localhost:8080/flag",
+        data: {x: x, y: y},
+        type: "POST",
+        dataType: "json"
+    }).done(function (result) {
+
+        getBoard()
+
+    }).fail(function (xhr, status, err) {
+    }).always(function (xhr, status) {
+    });
+}
+
 function setDifficultyLevel() {
     var submitBtn = $('#submitButton');
 
@@ -89,6 +124,8 @@ function setDifficultyLevel() {
 
         }).done(function (result) {
 
+            var levelDiv = $('#levelDiv');
+            levelDiv.hide();
             getBoard()
 
         }).fail(function (xhr, status, err) {

@@ -20,7 +20,7 @@ public class BoardServiceImpl implements BoardService {
     CellService cellService;
 
     @Override
-    public void createBoard(Difficulty difficulty) { // TODO difficulty
+    public void createBoard(Difficulty difficulty) {
         if (gameState.getBoard() != null) return;
         int xSize = 0;
         int ySize = 0;
@@ -37,8 +37,8 @@ public class BoardServiceImpl implements BoardService {
                 bombs = 40;
                 break;
             case HARD:
-                xSize = 30;
-                ySize = 16;
+                xSize = 16;
+                ySize = 30;
                 bombs = 99;
                 break;
         }
