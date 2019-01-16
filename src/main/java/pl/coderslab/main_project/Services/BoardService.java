@@ -9,4 +9,6 @@ public interface BoardService {
     void createBoard(Difficulty difficulty);
     BoardDto getRevealedBoard();
     GameplayStatus setReviledField(int x, int y);
+
+    void toggleFlag(int x, int y);
 }

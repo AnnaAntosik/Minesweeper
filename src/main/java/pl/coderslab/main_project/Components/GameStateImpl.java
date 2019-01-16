@@ -16,11 +16,13 @@ public class GameStateImpl implements GameState {
   private Board board;
   private int remainedFields;
   private boolean[][] revealedFields;
+  private boolean[][] flaggedField;
 
   public void setBoard(Board board) {
     this.board = board;
     this.remainedFields = board.sizeX * board.sizeY - board.bombsCount;
     this.revealedFields = new boolean[board.sizeX][board.sizeY];
+    this.flaggedField = new boolean[board.sizeX][board.sizeY];
   }
 
   @Override
@@ -46,5 +48,15 @@ public class GameStateImpl implements GameState {
   @Override
   public void setRevealedFields(boolean[][] revealedFields) {
     this.revealedFields = revealedFields;
+  }
+
+  @Override
+  public void toggleFlag(int x, int y) {
+    this.flaggedField[x][y] = !this.flaggedField[x][y];
+  }
+
+  @Override
+  public boolean checkIfFlagged(int x, int y) {
+    return this.flaggedField[x][y];
   }
 }

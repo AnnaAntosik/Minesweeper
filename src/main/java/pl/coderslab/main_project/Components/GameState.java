@@ -15,4 +15,9 @@ public interface GameState {
   Board getBoard();
 
   void setRevealedFields(boolean[][] clickedFieldsTable);
+
+  void toggleFlag(int x, int y);
+
+  boolean checkIfFlagged(int x, int y);
+
 }

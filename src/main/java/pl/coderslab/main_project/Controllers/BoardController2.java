@@ -33,7 +33,7 @@ public class BoardController2 {
 
     @PostMapping("/flag")
     public BoardDto setFlaggedField(int x, int y) {
-        //boardService.setReviledField(x, y);
+        boardService.toggleFlag(x, y);
         return boardService.getRevealedBoard();
     }
 

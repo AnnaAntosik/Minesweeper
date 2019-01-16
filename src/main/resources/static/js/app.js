@@ -32,6 +32,11 @@ function getBoard() {
                     if (result["status"] === "LOST" || result["status"] === "WIN") {
                         button.prop("disabled", true);
                     }
+                    if (cell["isFlagged"]) {
+                        var span = $('<span>');
+                        span.addClass("fas fa-flag");
+                        button.append(span);
+                    }
                 } else {
                     if (cell["isBomb"]) {
                         var span = $('<span>');
@@ -56,14 +61,10 @@ function getBoard() {
         }
 
         var buttons = $('button');
-        /*buttons.on('click', function () {
-            uncover($(this).attr('x'), $(this).attr('y'));
-        });*/
-
-        buttons.mouseup(function (e) {
-           if (e.which = 1) {
+        buttons.mousedown(function (e) {
+           if (e.button === 0) {
                uncover($(this).attr('x'), $(this).attr('y'));
-           } else if (e.which = 3) {
+           } else {
                flagButton($(this).attr('x'), $(this).attr('y'))
            }
         });

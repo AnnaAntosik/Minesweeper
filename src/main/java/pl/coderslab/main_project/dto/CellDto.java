@@ -5,6 +5,7 @@ public class CellDto {
     public Integer neighbouringBombs;
     public boolean isRevealed;
     public Boolean isBomb;
+    public boolean isFlagged;
 
     public Integer getNeighbouringBombs() {
         return neighbouringBombs;
@@ -18,4 +19,7 @@ public class CellDto {
         return isBomb;
     }
 
+    public boolean isFlagged() {
+        return isFlagged;
+    }
 }

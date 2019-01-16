@@ -69,6 +69,7 @@ public class BoardServiceImpl implements BoardService {
                     boardDto.cells[i][j] = cell;
                 } else {
                     boardDto.cells[i][j] = new CellDto();
+                    boardDto.cells[i][j].isFlagged = gameState.checkIfFlagged(i, j);
                 }
             }
         }
@@ -102,6 +103,11 @@ public class BoardServiceImpl implements BoardService {
             return GameplayStatus.WIN;
         }
         return GameplayStatus.CONTINUE;
+    }
+
+    @Override
+    public void toggleFlag(int x, int y) {
+        gameState.toggleFlag(x, y);
     }
 
     private int revealFields(
