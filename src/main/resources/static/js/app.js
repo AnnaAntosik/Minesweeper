@@ -39,12 +39,10 @@ function getBoard() {
                     }
                 } else {
                     if (cell["isBomb"]) {
-                        var span = $('<span>');
-                        span.addClass("fas fa-bomb");
+                        var span = $('<span class="fas fa-bomb"></span>');
                         td.append(span);
                     } else {
-                        var span = $('<span>');
-                        span.addClass("neighbouring");
+                        var span = $('<span class="neighbouring"></span>');
                         td.append(span);
                         span.text(cell["neighbouringBombs"])
                     }
@@ -52,15 +50,20 @@ function getBoard() {
             });
         });
 
+        var playAgainBtn = $('<button class="btn btn-primary" type="button">PLAY AGAIN</button>');
+
         if (result["status"] === "LOST") {
-            var lostDiv = $('<div class="alert alert-danger">YOU LOST!</div>');
-            boardDiv.after(lostDiv);
+            var resultDiv = $('<div class="alert alert-danger">YOU LOST!</div>');
+            boardDiv.after(resultDiv);
+            resultDiv.after(playAgainBtn);
+
         } else if (result["status"] === "WIN") {
-            var winDiv = $('<div class="alert alert-success">YOU WIN!</div>');
-            boardDiv.after(winDiv);
+            var resultDiv = $('<div class="alert alert-success">YOU WIN!</div>');
+            boardDiv.after(resultDiv);
+            resultDiv.after(playAgainBtn);
         }
 
-        var buttons = $('button');
+        var buttons = $('.boardButton');
         buttons.mousedown(function (e) {
            if (e.button === 0) {
                uncover($(this).attr('x'), $(this).attr('y'));
@@ -68,6 +71,18 @@ function getBoard() {
                flagButton($(this).attr('x'), $(this).attr('y'))
            }
         });
+
+
+
+        playAgainBtn.on('click', function () {
+
+            var levelDiv = $('#levelDiv');
+            boardDiv.hide();
+            resultDiv.hide();
+            playAgainBtn.hide();
+            levelDiv.show();
+
+        })
 
 
 
@@ -126,10 +141,14 @@ function setDifficultyLevel() {
         }).done(function (result) {
 
             var levelDiv = $('#levelDiv');
+            var boardDiv = $('#boardDiv').html('');
+
             levelDiv.hide();
+            boardDiv.show();
             getBoard()
 
         }).fail(function (xhr, status, err) {
+            console.log(err);
         }).always(function (xhr, status) {
         });
     })

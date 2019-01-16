@@ -21,7 +21,6 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void createBoard(Difficulty difficulty) {
-        if (gameState.getBoard() != null) return;
         int xSize = 0;
         int ySize = 0;
         int bombs = 0;
