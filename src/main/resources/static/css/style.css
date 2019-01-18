@@ -7,7 +7,7 @@
 }
 
 tr, td {
-    border: 1px solid #020202;
+    border: 1px dotted #020202;
 }
 
 .cell {
@@ -42,4 +42,15 @@ tr, td {
 
 .neighbouring {
     margin-left: 5px;
+}
+
+.resultDiv {
+    margin-top: 10px;
+}
+
+legend {
+    font: 25px Arial, Helvetica, sans-serif;
+    color: #060C13;
+    margin-top: 10px;
+    text-align: center;
 }

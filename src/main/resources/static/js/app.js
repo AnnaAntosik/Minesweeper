@@ -52,15 +52,17 @@ function getBoard() {
 
         var playAgainBtn = $('<button class="btn btn-primary" type="button">PLAY AGAIN</button>');
 
+        var containerDiv = $('<div class="container resultDiv"></div>');
+
         if (result["status"] === "LOST") {
-            var resultDiv = $('<div class="alert alert-danger">YOU LOST!</div>');
-            boardDiv.after(resultDiv);
-            resultDiv.after(playAgainBtn);
+            boardDiv.after(containerDiv);
+            containerDiv.append($('<div class="row row justify-content-center alert alert-danger"><b>YOU LOST!</b></div>'));
+            containerDiv.append($('<div class="row justify-content-center">').append(playAgainBtn));
 
         } else if (result["status"] === "WIN") {
-            var resultDiv = $('<div class="alert alert-success">YOU WIN!</div>');
-            boardDiv.after(resultDiv);
-            resultDiv.after(playAgainBtn);
+            boardDiv.after(containerDiv);
+            containerDiv.append($('<div class="row row justify-content-center alert alert-success"><b>YOU LOST!</b></div>'));
+            containerDiv.append($('<div class="row justify-content-center">').append(playAgainBtn));
         }
 
         var buttons = $('.boardButton');
@@ -72,19 +74,14 @@ function getBoard() {
            }
         });
 
-
-
         playAgainBtn.on('click', function () {
 
             var levelDiv = $('#levelDiv');
             boardDiv.hide();
-            resultDiv.hide();
-            playAgainBtn.hide();
+            containerDiv.hide();
             levelDiv.show();
 
         })
-
-
 
     }).fail(function (xhr, status, err) {
     }).always(function (xhr, status) {
