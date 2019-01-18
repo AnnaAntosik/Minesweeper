@@ -1,0 +1,56 @@
+#board {
+    background: #cccccc;
+    border: 5px double #020202;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+tr, td {
+    border: 1px dotted #020202;
+}
+
+.cell {
+    width: 25px;
+    height: 25px;
+    min-width: 25px;
+    min-height: 25px;
+    max-width: 25px;
+    max-height: 25px;
+    padding: 0px;
+    margin: 0px;
+    line-height: 1;
+}
+
+.boardButton  {
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    border-width: 1px;
+    background-color: #a3a3a3;
+}
+
+.boardButton:hover {
+    box-shadow: inset 6px 0px 75px -7px rgba(107,102,107,1);
+}
+
+.fas {
+    margin-left: 5px;
+    margin-top: -10px;
+}
+
+.neighbouring {
+    margin-left: 5px;
+}
+
+.resultDiv {
+    margin-top: 10px;
+}
+
+legend {
+    font: 25px Arial, Helvetica, sans-serif;
+    color: #060C13;
+    margin-top: 10px;
+    text-align: center;
+}
